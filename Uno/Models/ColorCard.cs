@@ -6,13 +6,11 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    internal enum CardType
+    internal class ColorCard : Card
     {
-        Wild,
-        WildDrawFour,
-        Number,
-        Skip,
-        DrawTwo,
-        Reverse
+        public ColorCard(Color color):base(color)
+        {
+            throw new NotImplementedException("ColorCard ctor");
+        }
     }
 }

@@ -6,7 +6,11 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    internal class ActionCard
+    internal class ActionCard : Card
     {
+        void TakeAction()
+        {
+
+        }
     }
 }

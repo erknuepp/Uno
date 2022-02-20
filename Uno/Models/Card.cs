@@ -6,12 +6,13 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    internal class Card
+    internal abstract class Card
     {
-        public string Color { get; init; }
-        public int? Number { get; init; }
-        public CardType CardType { get; init; }
+        public Card(Color color)
+        {
+            throw new NotImplementedException();
+        }
 
-
+        public Color Color {get; init;}
     }
 }

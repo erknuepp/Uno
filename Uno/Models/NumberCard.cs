@@ -6,7 +6,8 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    internal class NumberCard
+    internal class NumberCard : ColorCard
     {
+        ctor
     }
 }

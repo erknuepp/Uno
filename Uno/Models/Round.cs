@@ -6,13 +6,7 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    internal class WildCard : Card
+    internal class Round
     {
-        public bool DrawFour { get; init; }
-
-        public WildCard()
-        {
-
-        }
     }
 }

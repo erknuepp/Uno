@@ -8,5 +8,11 @@
 
     internal class Player
     {
+        public int Score { get; set; }
+
+        void PlayCard()
+        {
+
+        }
     }
 }
