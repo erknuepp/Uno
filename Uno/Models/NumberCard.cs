@@ -8,6 +8,10 @@
 
     internal class NumberCard : ColorCard
     {
-        ctor
+        private readonly int number;
+        public NumberCard(int number, Color color) : base(color)
+        {
+            this.number = number;
+        }
     }
 }

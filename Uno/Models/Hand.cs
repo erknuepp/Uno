@@ -16,5 +16,11 @@
     /// </summary>
     internal class Hand
     {
+        ICollection<Card> _cards = new List<Card>();
+
+        public Hand(ICollection<Card> cards)
+        {
+            _cards = cards;
+        }
     }
 }

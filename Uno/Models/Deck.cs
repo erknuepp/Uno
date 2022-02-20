@@ -15,24 +15,23 @@
     /// </summary>
     internal class Deck
     {
-        ICollection<Card> cards;
+        Stack<Card> cards;
 
         public Deck()
         {
-            cards = new List<Card>();
-            foreach (var color in Enum.GetNames<Color>())
+            cards = new Stack<Card>();
+            foreach (Color color in Enum.GetValues<Color>())
             {
                 for (int i = 1; i < 10; i++)
                 {
-                    cards.Add(new Card())
+                    cards.Push(new NumberCard(i, color));
                 }
-            }
-            
+            }            
         }
 
         void Shuffle()
         {
-
+            throw new NotImplementedException("Deck.Shuffle - google sort/shuffle for stack");
         }
 
         void Deal(ICollection<Player> players)
@@ -41,5 +40,8 @@
         }
 
         Card Draw()
+        {
+            return cards.Pop();
+        }
     }
 }

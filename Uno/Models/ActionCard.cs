@@ -6,9 +6,17 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    internal class ActionCard : Card
+    internal class ActionCard : ColorCard
     {
-        void TakeAction()
+        Action Action { get; init; }
+
+        public ActionCard(Action action , Color color) : base(color)
+        {
+            Action = action;
+            Color = color;
+        }
+
+        void TakeAction() 
         {
 
         }

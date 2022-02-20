@@ -8,8 +8,12 @@
 
     internal class Player
     {
+        public string Name { get; init; }
         public int Score { get; set; }
-
+        public Player(string name)
+        {
+            Name = name;
+        }
         void PlayCard()
         {
 
