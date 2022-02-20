@@ -8,5 +8,7 @@
 
     internal class Game
     {
+        //Defaults to True
+        private bool isProcessionClockwise = true;
     }
 }
