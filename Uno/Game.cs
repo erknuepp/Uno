@@ -1,4 +1,4 @@
-﻿namespace Uno.Controllers
+﻿namespace Uno
 {
     using System;
     using System.Collections.Generic;
@@ -18,5 +18,12 @@
         private bool isProcessionClockwise = true;
 
         const int Winning_Score = 500;
+
+        public Game()
+        {
+
+        }
+
+        internal void Play() { throw new NotImplementedException(); }
     }
 }

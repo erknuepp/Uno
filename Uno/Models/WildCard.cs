@@ -9,8 +9,8 @@
     internal class WildCard : Card
     {
         public bool DrawFour { get; init; }
-
-        public WildCard()
+        
+        public WildCard(Color color = Color.Wild):base(color)
         {
 
         }

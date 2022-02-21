@@ -15,14 +15,25 @@
     using System.Windows.Navigation;
     using System.Windows.Shapes;
 
+    using Uno.Models;
+
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
+        Game _game = new Game();
+        ICollection<Player> players;
         public MainWindow()
         {
             InitializeComponent();
+            players = new List<Player>();
+
+        }
+
+        private void PlayButton_Click(object sender, RoutedEventArgs e)
+        {
+            _game.Play();
         }
     }
 }
