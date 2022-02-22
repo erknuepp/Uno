@@ -8,8 +8,11 @@
 
     internal abstract class Card
     {
-        public Card()
+        public Card(string name)
         {
+            Name = name;
         }
+
+        internal string Name { get; init; }
     }
 }

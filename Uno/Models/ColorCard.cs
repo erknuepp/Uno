@@ -10,7 +10,7 @@
     {
         Color Color { get; init; }
 
-        public ColorCard(Color color) : base()
+        public ColorCard(Color color, string name) : base(name)
         {
             Color = color;
         }

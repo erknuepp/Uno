@@ -20,25 +20,25 @@
             //Generate Wilds
             for (int i = 0; i < 4; i++)
             {
-                cards.Push(new WildCard(isDrawFour: true));
-                cards.Push(new WildCard(isDrawFour: false));
+                cards.Push(new WildCard(isDrawFour: true, "Wild Draw Four"));
+                cards.Push(new WildCard(isDrawFour: false, "Wild"));
             }
 
             foreach (Color color in Enum.GetValues<Color>())
             {
-                cards.Push(new NumberCard(0, color));
+                cards.Push(new NumberCard(0, color, $"{color} Number 0"));
 
                 for (int i = 1; i < 10; i++)
                 {
-                    cards.Push(new NumberCard(i, color));
-                    cards.Push(new NumberCard(i, color));
+                    cards.Push(new NumberCard(i, color, $"{color} Number {i}"));
+                    cards.Push(new NumberCard(i, color, $"{color} Number {i}"));
                 }
 
                 for (int i = 0; i < 2; i++)
                 {
-                    cards.Push(new ActionCard(Action.Reverse, color));
-                    cards.Push(new ActionCard(Action.Skip, color));
-                    cards.Push(new ActionCard(Action.DrawTwo, color));
+                    cards.Push(new ActionCard(Action.Reverse, color, $"{color} Reverse"));
+                    cards.Push(new ActionCard(Action.Skip, color, $"{color} Skip"));
+                    cards.Push(new ActionCard(Action.DrawTwo, color, $"{color} Draw Two"));
                 }
             }            
         }

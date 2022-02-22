@@ -10,7 +10,7 @@
     {
         Action Action { get; init; }
 
-        public ActionCard(Action action , Color color) : base(color)
+        public ActionCard(Action action , Color color, string name) : base(color, name)
         {
             Action = action;
         }

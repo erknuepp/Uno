@@ -10,7 +10,7 @@
     {
         public bool IsDrawFour { get; init; }
         
-        public WildCard(bool isDrawFour):base()
+        public WildCard(bool isDrawFour, string name):base(name)
         {
             IsDrawFour = isDrawFour;
         }
