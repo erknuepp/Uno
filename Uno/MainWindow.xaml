@@ -106,10 +106,16 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Label Content="# Players" Grid.Column="0"/>
-            <TextBox Grid.Column="1"/>
+            <Label Content="Enter the number of Players" Grid.Column="0" HorizontalAlignment="Right"/>
+            <TextBox Name="NumberOfPlayers" Grid.Column="1"/>
             <Button Grid.Column="2" Click="PlayButton_Click" Content="Play"/>
         </Grid>
-
+        <Popup Name="myPopup" IsOpen="True" >
+            <Border BorderThickness="1">
+                <TextBlock Name="myPopupText" Background="LightBlue" Foreground="Blue" Padding="30">
+                Popup Text
+                </TextBlock>
+            </Border>
+        </Popup>
     </StackPanel>
 </Window>

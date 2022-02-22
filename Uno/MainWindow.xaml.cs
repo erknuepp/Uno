@@ -22,18 +22,33 @@
     /// </summary>
     public partial class MainWindow : Window
     {
-        Game _game = new Game();
-        ICollection<Player> players;
+        private Deck _deck;
+        private DiscardPile _discardPile;
+        private readonly Game _game;
+        ICollection<Player> _players;
+
         public MainWindow()
         {
             InitializeComponent();
-            players = new List<Player>();
-
+            
+            _deck = new Deck();
+            _discardPile = new DiscardPile();
+            _game = new Game();
+            _players = new List<Player>();
         }
 
         private void PlayButton_Click(object sender, RoutedEventArgs e)
         {
-            _game.Play();
+            int numberOfPlayers;
+            while (int.TryParse(NumberOfPlayers.Text, out numberOfPlayers))
+            {
+                for (int i = 0; i < numberOfPlayers; i++)
+                {
+                    _players.Add(new Player($"Player {i + 1}"));
+                }
+
+                _game.Play(numberOfPlayers);
+            }
         }
     }
 }

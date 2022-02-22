@@ -10,7 +10,7 @@
     {
         public Card(Color color)
         {
-            throw new NotImplementedException();
+            Color = color;
         }
 
         public Color Color {get; init;}

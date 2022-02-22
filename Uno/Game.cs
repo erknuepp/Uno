@@ -24,6 +24,9 @@
 
         }
 
-        internal void Play() { throw new NotImplementedException(); }
+        internal void Play(int numberOfPlayers) 
+        { 
+            //throw new NotImplementedException(); 
+        }
     }
 }

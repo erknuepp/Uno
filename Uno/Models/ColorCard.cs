@@ -10,7 +10,7 @@
     {
         public ColorCard(Color color):base(color)
         {
-            throw new NotImplementedException("ColorCard ctor");
+            
         }
     }
 }
