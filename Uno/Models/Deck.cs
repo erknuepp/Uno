@@ -3,8 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
 
     /// <summary>
     /// The deck consists of 108 cards: four each of "Wild" 
@@ -51,9 +49,24 @@
             throw new NotImplementedException("Deck.Shuffle - google sort/shuffle for stack");
         }
 
+        /// <summary>
+        /// To start a hand, seven cards are dealt to each player, 
+        /// and the top card of the remaining deck is flipped over 
+        /// and set aside to begin the discard pile. 
+        /// The player to the dealer's left plays first unless 
+        /// the first card on the discard pile is an action or Wild card (see below). 
+        /// On a player's turn, they must do one of the following:
+        /// </summary>
         void Deal(ICollection<Player> players)
         {
-
+            
+            for (int i = 0; i < 7; i++)
+            {
+                foreach (var player in players)
+                {
+                    player.TakeCard(cards.Pop());
+                }
+            }
         }
 
         Card Draw()
