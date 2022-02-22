@@ -18,8 +18,6 @@
         public void AddCard(Card card)
         {
             cards.Push(card);
-        }
-
-        public Card TakeCard() { return cards.Pop(); }
+        }        
     }
 }

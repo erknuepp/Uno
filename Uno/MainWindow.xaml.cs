@@ -37,10 +37,10 @@
             _players = new List<Player>();
         }
 
-        private void PlayButton_Click(object sender, RoutedEventArgs e)
+        private void PlayGameButton_Click(object sender, RoutedEventArgs e)
         {
             int numberOfPlayers;
-            while (int.TryParse(NumberOfPlayers.Text, out numberOfPlayers))
+            while (!int.TryParse(NumberOfPlayersTextBox.Text, out numberOfPlayers))
             {
                 for (int i = 0; i < numberOfPlayers; i++)
                 {
@@ -49,6 +49,11 @@
 
                 _game.Play(numberOfPlayers);
             }
+        }
+
+        private void PlayCardButton_Click(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException("PlayCardButton_Click");
         }
     }
 }

@@ -7,10 +7,35 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <StackPanel>
-
-        <Grid 
-        
-        Width="794" Height="411">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Label Content="Enter the number of Players" Grid.Column="0" HorizontalAlignment="Right"/>
+            <TextBox Name="NumberOfPlayersTextBox" Grid.Column="1"/>
+            <Button Grid.Column="2" Click="PlayGameButton_Click" Content="Play Game"/>
+        </Grid>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Label Name="PlayerNameLabel" Content="Placeholder Player Name" Grid.Column="0" HorizontalAlignment="Right"/>
+            <ComboBox Grid.Column="1" >
+                <ComboBoxItem Content="Test"/>
+            </ComboBox>
+            <Button Grid.Column="2" Click="PlayCardButton_Click" Content="Play Card"/>
+        </Grid>
+        <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>
@@ -95,27 +120,10 @@
                 HorizontalAlignment="Center" 
                 Margin="0,45,0,0" VerticalAlignment="Top"
             />
-            
+            <TreeView/>
+
         </Grid>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <Label Content="Enter the number of Players" Grid.Column="0" HorizontalAlignment="Right"/>
-            <TextBox Name="NumberOfPlayers" Grid.Column="1"/>
-            <Button Grid.Column="2" Click="PlayButton_Click" Content="Play"/>
-        </Grid>
-        <Popup Name="myPopup" IsOpen="True" >
-            <Border BorderThickness="1">
-                <TextBlock Name="myPopupText" Background="LightBlue" Foreground="Blue" Padding="30">
-                Popup Text
-                </TextBlock>
-            </Border>
-        </Popup>
+        
+        
     </StackPanel>
 </Window>
