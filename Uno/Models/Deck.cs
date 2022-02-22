@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
 
     /// <summary>
     /// The deck consists of 108 cards: four each of "Wild" 
@@ -44,9 +43,10 @@
             }            
         }
 
-        void Shuffle()
+        internal void Shuffle()
         {
-            throw new NotImplementedException("Deck.Shuffle - google sort/shuffle for stack");
+            throw new NotImplementedException(" Deck.Shuffle() - Google: 'C# Shuffle Stack' ");
+            //Google: 'C# Shuffle Stack'
         }
 
         /// <summary>
@@ -57,7 +57,7 @@
         /// the first card on the discard pile is an action or Wild card (see below). 
         /// On a player's turn, they must do one of the following:
         /// </summary>
-        void Deal(ICollection<Player> players)
+        internal void Deal(ICollection<Player> players)
         {
             
             for (int i = 0; i < 7; i++)
@@ -69,7 +69,7 @@
             }
         }
 
-        Card Draw()
+        internal Card Draw()
         {
             return cards.Pop();
         }
