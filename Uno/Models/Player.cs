@@ -3,20 +3,27 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
 
     internal class Player
     {
-        public string Name { get; init; }
-        public int Score { get; set; }
+        private IList<Card> _cards;
+        internal string Name { get; init; }
+        internal int Score { get; set; }
+
         public Player(string name)
         {
+            _cards = new List<Card>();
             Name = name;
         }
-        void PlayCard()
-        {
 
+        internal Card PlayCard(int position)
+        {
+            return _cards[position];
+        }
+
+        internal void TakeCard(Card card)
+        {
+            _cards.Add(card);
         }
     }
 }
