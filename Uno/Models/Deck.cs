@@ -20,11 +20,28 @@
         public Deck()
         {
             cards = new Stack<Card>();
+            //Generate Wilds
+            for (int i = 0; i < 4; i++)
+            {
+                cards.Push(new WildCard(isDrawFour: true));
+                cards.Push(new WildCard(isDrawFour: false));
+            }
+
             foreach (Color color in Enum.GetValues<Color>())
             {
+                cards.Push(new NumberCard(0, color));
+
                 for (int i = 1; i < 10; i++)
                 {
                     cards.Push(new NumberCard(i, color));
+                    cards.Push(new NumberCard(i, color));
+                }
+
+                for (int i = 0; i < 2; i++)
+                {
+                    cards.Push(new ActionCard(Action.Reverse, color));
+                    cards.Push(new ActionCard(Action.Skip, color));
+                    cards.Push(new ActionCard(Action.DrawTwo, color));
                 }
             }            
         }

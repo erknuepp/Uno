@@ -5,7 +5,6 @@
 
     public enum Color
     {
-        Wild,
         Red,
         Blue,
         Green,

@@ -8,11 +8,8 @@
 
     internal abstract class Card
     {
-        public Card(Color color)
+        public Card()
         {
-            Color = color;
         }
-
-        public Color Color {get; init;}
     }
 }

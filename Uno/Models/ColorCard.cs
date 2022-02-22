@@ -8,9 +8,11 @@
 
     internal class ColorCard : Card
     {
-        public ColorCard(Color color):base(color)
+        Color Color { get; init; }
+
+        public ColorCard(Color color) : base()
         {
-            
+            Color = color;
         }
     }
 }

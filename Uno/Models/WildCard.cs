@@ -8,11 +8,11 @@
 
     internal class WildCard : Card
     {
-        public bool DrawFour { get; init; }
+        public bool IsDrawFour { get; init; }
         
-        public WildCard(Color color = Color.Wild):base(color)
+        public WildCard(bool isDrawFour):base()
         {
-
+            IsDrawFour = isDrawFour;
         }
     }
 }

@@ -13,7 +13,6 @@
         public ActionCard(Action action , Color color) : base(color)
         {
             Action = action;
-            Color = color;
         }
 
         void TakeAction() 
