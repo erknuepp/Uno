@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     /// <summary>
     /// The deck consists of 108 cards: four each of "Wild" 
@@ -45,8 +46,17 @@
 
         internal void Shuffle()
         {
-            throw new NotImplementedException(" Deck.Shuffle() - Google: 'C# Shuffle Stack' ");
+            //throw new NotImplementedException(" Deck.Shuffle() - Google: 'C# Shuffle Stack' ");
             //Google: 'C# Shuffle Stack'
+            IList<Card> list = cards.ToList();
+            list=list.OrderBy(a => Guid.NewGuid()).ToList();
+            cards = new Stack<Card>();
+            foreach(var card in list)
+            {
+                cards.Push(card);
+            }
+
+
         }
 
         /// <summary>
