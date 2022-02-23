@@ -120,7 +120,6 @@
                 HorizontalAlignment="Center" 
                 Margin="0,45,0,0" VerticalAlignment="Top"
             />
-            <TreeView/>
 
         </Grid>
         

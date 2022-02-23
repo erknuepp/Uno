@@ -40,13 +40,15 @@
         private void PlayGameButton_Click(object sender, RoutedEventArgs e)
         {
             int numberOfPlayers;
-            while (!int.TryParse(NumberOfPlayersTextBox.Text, out numberOfPlayers))
+            while (int.TryParse(NumberOfPlayersTextBox.Text, out numberOfPlayers))
             {
                 for (int i = 0; i < numberOfPlayers; i++)
                 {
                     _players.Add(new Player($"Player {i + 1}"));
                 }
 
+                _deck.Shuffle();
+                _deck.Deal(_players);
                 _game.Play(numberOfPlayers);
             }
         }

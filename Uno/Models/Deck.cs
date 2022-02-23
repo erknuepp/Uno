@@ -55,8 +55,6 @@
             {
                 cards.Push(card);
             }
-
-
         }
 
         /// <summary>
