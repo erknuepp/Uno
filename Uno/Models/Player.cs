@@ -25,5 +25,10 @@
         {
             _cards.Add(card);
         }
+
+        internal IList<String> GetHand()
+        {
+            return _cards.Select(x => x.Name).ToList();
+        }
     }
 }

@@ -18,6 +18,11 @@
         public void AddCard(Card card)
         {
             cards.Push(card);
-        }        
+        }
+        
+        public string LastCardPlayed()
+        {
+            return cards.Peek().Name;
+        }
     }
 }

@@ -32,25 +32,41 @@
             InitializeComponent();
             
             _deck = new Deck();
+            _deck.Shuffle();
             _discardPile = new DiscardPile();
             _game = new Game();
-            _players = new List<Player>();
+            _players = new LinkedList<Player>();
         }
 
         private void PlayGameButton_Click(object sender, RoutedEventArgs e)
         {
-            int numberOfPlayers;
-            while (int.TryParse(NumberOfPlayersTextBox.Text, out numberOfPlayers))
-            {
-                for (int i = 0; i < numberOfPlayers; i++)
-                {
-                    _players.Add(new Player($"Player {i + 1}"));
-                }
+            //int numberOfPlayers;
 
-                _deck.Shuffle();
-                _deck.Deal(_players);
-                _game.Play(numberOfPlayers);
+            //refactor this to a method in an input class???
+            //while (int.TryParse(NumberOfPlayersTextBox.Text, out numberOfPlayers))
+            //{
+                
+            //}
+
+            for (int i = 0; i < 2; i++) //update to correct # of players
+            {
+                _players.Add(new Player($"Player {i + 1}"));
             }
+
+            
+            _deck.Deal(_players);
+            _discardPile.AddCard(_deck.Draw());
+            DiscardPileLabel.Content = _discardPile.LastCardPlayed();
+            PlayerNameLabel.Content = _players.First().Name + " Play A Card: ";
+            HandComboBox.ItemsSource = _players.First().GetHand();
+            //_game.Play(numberOfPlayers);
+            //var players = _players.GetEnumerator();
+            //while (players.MoveNext())
+            //{
+            //    //Start the game here
+
+            //}
+            ((Button)sender).IsEnabled = false;
         }
 
         private void PlayCardButton_Click(object sender, RoutedEventArgs e)

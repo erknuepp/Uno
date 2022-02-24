@@ -30,11 +30,11 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Label Name="PlayerNameLabel" Content="Placeholder Player Name" Grid.Column="0" HorizontalAlignment="Right"/>
-            <ComboBox Grid.Column="1" >
-                <ComboBoxItem Content="Test"/>
-            </ComboBox>
+            <ComboBox Name="HandComboBox" Grid.Column="1" />
             <Button Grid.Column="2" Click="PlayCardButton_Click" Content="Play Card"/>
         </Grid>
+        <Label Content="Discard Pile" Name="DiscardPileLabel"></Label>
+        <Label Name="OutputLabel"></Label>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition/>
