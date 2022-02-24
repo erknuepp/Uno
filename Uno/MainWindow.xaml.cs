@@ -26,6 +26,7 @@
         private DiscardPile _discardPile;
         private readonly Game _game;
         ICollection<Player> _players;
+        IEnumerator<Player> _playersEnumerator;
 
         public MainWindow()
         {
@@ -52,13 +53,17 @@
             {
                 _players.Add(new Player($"Player {i + 1}"));
             }
-
-            
+            _playersEnumerator = _players.GetEnumerator();
+            //TODO add comments
             _deck.Deal(_players);
             _discardPile.AddCard(_deck.Draw());
             DiscardPileLabel.Content = _discardPile.LastCardPlayed();
             PlayerNameLabel.Content = _players.First().Name + " Play A Card: ";
             HandComboBox.ItemsSource = _players.First().GetHand();
+            ((Button)sender).IsEnabled = false;
+            throw new NotImplementedException("Handle logic of what happens if first card flipped is an action card.");
+
+            //TODO I think this enumeration should eist outside the click event and next should be called when you click play card somehow.
             //_game.Play(numberOfPlayers);
             //var players = _players.GetEnumerator();
             //while (players.MoveNext())
@@ -66,11 +71,16 @@
             //    //Start the game here
 
             //}
-            ((Button)sender).IsEnabled = false;
+            
         }
 
         private void PlayCardButton_Click(object sender, RoutedEventArgs e)
         {
+            //TODO somehow need to pop the right card from the hand and push to the discard pile.....
+            //might be better to bind actual cards to the combobox nd display the name somehow
+            //Note there should probably be a redunacy check to make sure the total cards is 108
+            //_discardPile.AddCard(HandComboBox.SelectedItem
+            _playersEnumerator.MoveNext();
             throw new NotImplementedException("PlayCardButton_Click");
         }
     }
