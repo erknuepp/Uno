@@ -26,7 +26,7 @@
         private DiscardPile _discardPile;
         ICollection<Player> _players;
         IEnumerator<Player> _playersEnumerator;
-        private int _round = 1; //See how to bind this to a label so it auto updates
+        private int _round = 1; //TODO See how to bind this to a label so it auto updates
 
         public MainWindow()
         {
@@ -41,9 +41,7 @@
 
         private void PlayGameButton_Click(object sender, RoutedEventArgs e)
         {
-            //int numberOfPlayers;
-
-            //refactor this to a method in an input class???
+            //TODO refactor this to a method in an input class???
             //while (int.TryParse(NumberOfPlayersTextBox.Text, out numberOfPlayers))
             //{
                 
@@ -82,7 +80,12 @@
             
         }
 
-        //Check that the player has a playable card in their hand
+        /// <summary>
+        /// Check that the player has a playable card in their hand
+        /// </summary>
+        /// <param name="firstCard"></param>
+        /// <param name="getHand"></param>
+        /// <returns>bool</returns>
         private bool CanPlay(Card firstCard, Func<IList<string>> getHand)
         {
             var canPlay = false;
@@ -100,6 +103,12 @@
             var currentPlayer = _playersEnumerator.Current;
 
             throw new NotImplementedException("PlayCardButton_Click");
+
+            //TODO if a play plays their last card tally up the score:
+            //Number cards count their face value, all action cards count 20,
+            //and Wild and Wild Draw Four cards count 50.
+            //If a Draw Two or Wild Draw Four card is played to go out,
+            //the next player in the sequence must draw the appropriate number of cards before the score is tallied.
         }
     }
 }

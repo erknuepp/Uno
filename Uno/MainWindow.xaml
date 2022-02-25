@@ -18,7 +18,17 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Label Content="Enter the number of Players" Grid.Column="0" HorizontalAlignment="Right"/>
-            <TextBox Name="NumberOfPlayersTextBox" Grid.Column="1"/>
+            <ComboBox Name="NumberOfPlayersComboBox" Grid.Column="1">
+                <ComboBoxItem Content="2"/>
+                <ComboBoxItem Content="3"/>
+                <ComboBoxItem Content="4"/>
+                <ComboBoxItem Content="5"/>
+                <ComboBoxItem Content="6"/>
+                <ComboBoxItem Content="7"/>
+                <ComboBoxItem Content="8"/>
+                <ComboBoxItem Content="9"/>
+                <ComboBoxItem Content="10"/>
+            </ComboBox>
             <Button Grid.Column="2" Click="PlayGameButton_Click" Content="Play Game"/>
         </Grid>
         <Grid>
@@ -36,7 +46,5 @@
         </Grid>
         <Label Content="Discard Pile" Name="DiscardPileLabel"></Label>
         <Label Name="OutputLabel"></Label>
-
-
     </StackPanel>
 </Window>
