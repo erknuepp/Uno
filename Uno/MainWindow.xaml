@@ -7,6 +7,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <StackPanel>
+        <Label Name="RoundLabel" Content="Round 1"/>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition/>
@@ -35,94 +36,7 @@
         </Grid>
         <Label Content="Discard Pile" Name="DiscardPileLabel"></Label>
         <Label Name="OutputLabel"></Label>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
 
-            <Label 
-                Name="Player1"
-                Content="Player1" 
-                HorizontalAlignment="Center" 
-                Margin="0,45,0,0" VerticalAlignment="Top"
-            />
 
-            <Label 
-                Name="Player2"
-                Grid.Column="1" 
-                Content="Player2" 
-                HorizontalAlignment="Center" 
-                Margin="0,45,0,0" VerticalAlignment="Top"
-            />
-            <Label 
-                Name="Player3"
-                Grid.Column="2" 
-                Content="Player3" 
-                HorizontalAlignment="Center" 
-                Margin="0,45,0,0" VerticalAlignment="Top"
-            />
-
-            <Label 
-                Name="Player4"
-                Grid.Column="2" 
-                Grid.Row="1" 
-                Content="Player4" 
-                HorizontalAlignment="Center" 
-                Margin="0,45,0,0" VerticalAlignment="Top"
-            />
-
-            <Label 
-                Name="Player5"
-                Grid.Column="2" 
-                Grid.Row="2" 
-                Content="Player5" 
-                HorizontalAlignment="Center" 
-                Margin="0,45,0,0" VerticalAlignment="Top"
-            />
-
-            <Label 
-                Name="Player6"
-                Grid.Column="1" 
-                Grid.Row="2" 
-                Content="Player6" 
-                HorizontalAlignment="Center" 
-                Margin="0,45,0,0" VerticalAlignment="Top"
-            />
-
-            <Label 
-                Name="Player7"
-                Grid.Column="0" 
-                Grid.Row="2" 
-                Content="Player7" 
-                HorizontalAlignment="Center" 
-                Margin="0,45,0,0" VerticalAlignment="Top"
-            />
-
-            <Label 
-                Name="Player8"
-                Content="Player8" 
-                HorizontalAlignment="Center" 
-                Margin="0,45,0,0" VerticalAlignment="Top" 
-                Grid.Row="1" 
-            />
-
-            <Label 
-                Grid.Column="1" 
-                Grid.Row="1"
-                Content="Deck" 
-                HorizontalAlignment="Center" 
-                Margin="0,45,0,0" VerticalAlignment="Top"
-            />
-
-        </Grid>
-        
-        
     </StackPanel>
 </Window>

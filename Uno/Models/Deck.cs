@@ -21,8 +21,8 @@
             //Generate Wilds
             for (int i = 0; i < 4; i++)
             {
-                cards.Push(new WildCard(isDrawFour: true, "Wild Draw Four"));
-                cards.Push(new WildCard(isDrawFour: false, "Wild"));
+                cards.Push(new WildDrawFourCard());
+                cards.Push(new WildCard());
             }
 
             foreach (Color color in Enum.GetValues<Color>())
@@ -46,8 +46,6 @@
 
         internal void Shuffle()
         {
-            //throw new NotImplementedException(" Deck.Shuffle() - Google: 'C# Shuffle Stack' ");
-            //Google: 'C# Shuffle Stack'
             IList<Card> list = cards.ToList();
             list=list.OrderBy(a => Guid.NewGuid()).ToList();
             cards = new Stack<Card>();
@@ -67,7 +65,6 @@
         /// </summary>
         internal void Deal(ICollection<Player> players)
         {
-            
             for (int i = 0; i < 7; i++)
             {
                 foreach (var player in players)

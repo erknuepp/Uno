@@ -8,13 +8,10 @@
 
     using Uno.Contracts;
 
-    internal class ActionCard : ColorCard, IActionable
+    internal class WildDrawFourCard : Card, IActionable
     {
-        Action Action { get; init; }
-
-        public ActionCard(Action action , Color color, string name) : base(color, name)
+        public WildDrawFourCard(string name = "Wild Draw Four") : base(name)
         {
-            Action = action;
         }
 
         public void TakeAction()

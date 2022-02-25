@@ -1,4 +1,4 @@
-﻿namespace Uno.Models
+﻿namespace Uno.Contracts
 {
     using System;
     using System.Collections.Generic;
@@ -6,7 +6,8 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    internal class Round
+    internal interface IActionable
     {
+        void TakeAction();
     }
 }
