@@ -2,8 +2,9 @@
 {
     internal class WildCard : Card
     {
-        
-        public WildCard(string name = "Wild"):base(name)
+        const int value = 50;
+
+        public WildCard(string name = "Wild"):base(name, value)
         {
         }
     }

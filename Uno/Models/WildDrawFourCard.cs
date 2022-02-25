@@ -6,7 +6,9 @@
 
     internal class WildDrawFourCard : Card, IActionable
     {
-        public WildDrawFourCard(string name = "Wild Draw Four") : base(name)
+        const int value = 50;
+
+        public WildDrawFourCard(string name = "Wild Draw Four") : base(name, value)
         {
         }
 
