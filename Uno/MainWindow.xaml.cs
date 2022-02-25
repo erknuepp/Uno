@@ -41,17 +41,12 @@
 
         private void PlayGameButton_Click(object sender, RoutedEventArgs e)
         {
-            //TODO refactor this to a method in an input class???
-            //while (int.TryParse(NumberOfPlayersTextBox.Text, out numberOfPlayers))
-            //{
-                
-            //}
-
-            for (int i = 0; i < 2; i++) //update to correct # of players
+            var numberOfPlayers = (int)NumberOfPlayersComboBox.SelectedValue;
+            for (int i = 0; i < numberOfPlayers; i++)
             {
                 _players.Add(new Player($"Player {i + 1}"));
             }
-            //_playersEnumerator = _players.GetEnumerator();
+            _playersEnumerator = _players.GetEnumerator();
             //TODO add comments
             _deck.Deal(_players);
             var firstCard = _deck.Draw();
