@@ -41,37 +41,43 @@
 
         private void PlayGameButton_Click(object sender, RoutedEventArgs e)
         {
+            //Create players
             var numberOfPlayers = (int)NumberOfPlayersComboBox.SelectedValue;
             for (int i = 0; i < numberOfPlayers; i++)
             {
                 _players.Add(new Player($"Player {i + 1}"));
             }
+
+            //Get players enumeration
             _playersEnumerator = _players.GetEnumerator();
-            //TODO add comments
+
+            //Deal cards
             _deck.Deal(_players);
+
+            //Flip fist card to discard pile
             var firstCard = _deck.Draw();
             _discardPile.AddCard(firstCard);
 
+            //Determine of first card flipped requires an action
             if(firstCard.GetType() == typeof(ActionCard))
             {
+                //TODO Add logic if first card is action card
                 ((ActionCard)firstCard).TakeAction();
             }
-            //TODO Add logic if first card is action card
+
+            //Update UI 
             DiscardPileLabel.Content = "Discard Pile: " + _discardPile.LastCardPlayed();
-            PlayerNameLabel.Content = _players.First().Name + " Play A Card: ";
+            PlayerNameLabel.Content = _players.First().Name + " Play A Card: ";            
             HandComboBox.ItemsSource = _players.First().GetHand();
             ((Button)sender).IsEnabled = false;
-            
 
-            //TODO I think this enumeration should eist outside the click event and next should be called when you click play card somehow.
-            //_game.Play(numberOfPlayers);
-            //var players = _players.GetEnumerator();
-            //while (players.MoveNext())
-            //{
-            //    //Start the game here
-
-            //}
+            //Determine if play has a card to play
             bool canPlay = CanPlay(firstCard, _players.First().GetHand);
+
+            while (!canPlay)
+            {
+                //TODO draw more cards until a card can be played
+            }
             
         }
 
