@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <StackPanel>
-        <Label Name="RoundLabel" Content="Round 1"/>
+        <Label Name="RoundLabel" />
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition/>

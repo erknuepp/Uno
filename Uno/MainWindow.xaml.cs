@@ -3,18 +3,8 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Controls;
-    using System.Windows.Data;
-    using System.Windows.Documents;
-    using System.Windows.Input;
-    using System.Windows.Media;
-    using System.Windows.Media.Imaging;
-    using System.Windows.Navigation;
-    using System.Windows.Shapes;
-
 
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -30,7 +20,7 @@
         public MainWindow()
         {
             InitializeComponent();
-            
+
             _deck = new Deck();
             _deck.Shuffle();
             _discardPile = new DiscardPile();
@@ -58,18 +48,18 @@
             var firstCard = _deck.Draw();
             _discardPile.AddCard(firstCard);
 
-            if(firstCard.GetType() == typeof(WildCard))
+            if (firstCard.GetType() == typeof(WildCard))
             {
                 //TODO Player gets to pick any color and has to play a card on that color
                 //or just let them play any card?
             }
 
             //Determine of first card flipped requires an action
-            if(firstCard.GetType() == typeof(ActionCard))
+            if (firstCard.GetType() == typeof(ActionCard))
             {
                 //TODO Add logic if first card is action card
                 //((ActionCard)firstCard).TakeAction(); //TODO rethink implementation
-                if(((ActionCard)firstCard).Action  == Action.DrawTwo)
+                if (((ActionCard)firstCard).Action == Action.DrawTwo)
                 {
                     //Add two cards to players hand, MoveNext
                 }
@@ -88,16 +78,17 @@
             }
 
             //Update UI 
+            RoundLabel.Content = "Round " + _round;
             DiscardPileLabel.Content = "Discard Pile: " + _discardPile.LastCardPlayed();
-            PlayerNameLabel.Content = _players.First().Name + " Play A Card: ";            
-            HandComboBox.ItemsSource = _players.First().GetHand();
-            
+            PlayerNameLabel.Content = _players.First().Name + " Play A Card: ";
+            HandComboBox.ItemsSource = _players.First().GetHand().Select(x => x.Name);
+
 
             while (!CanPlay(firstCard, _players.First().GetHand()))
             {
                 _players.First().TakeCard(_deck.Draw());
             }
-            
+
         }
 
         /// <summary>
@@ -114,7 +105,7 @@
             var cardBaseType = cardType.BaseType;
 
             //if card is color card look for those
-            if(cardType != typeof(WildCard) && cardBaseType != typeof(WildCard))
+            if (cardType != typeof(WildCard) && cardBaseType != typeof(WildCard))
             {
                 if (cardType == typeof(NumberCard))
                 {
@@ -123,18 +114,21 @@
                         var cardInHandType = cardInHand.GetType();
                         var cardInHandBaseType = cardInHandType.BaseType;
 
-                        if (((ColorCard)cardInHand).Color == ((ColorCard)card).Color)
+                        if (cardInHandType == typeof(NumberCard))
                         {
-                            canPlay = true;
-                            break;
-                        }
-                        else if (((NumberCard)cardInHand).Number == ((NumberCard)card).Number)
-                        {
-                            canPlay = true;
-                            break;
+                            if (((ColorCard)cardInHand).Color == ((ColorCard)card).Color)
+                            {
+                                canPlay = true;
+                                break;
+                            }
+                            else if (((NumberCard)cardInHand).Number == ((NumberCard)card).Number)
+                            {
+                                canPlay = true;
+                                break;
+                            }
                         }
                     }
-                }                
+                }
                 else
                 {
                     foreach (Card cardInHand in hand)
@@ -142,34 +136,56 @@
                         var cardInHandType = cardInHand.GetType();
                         var cardInHandBaseType = cardInHandType.BaseType;
 
-                        if (((ColorCard)cardInHand).Color == ((ColorCard)card).Color)
+                        if (cardInHandType == typeof(ActionCard))
                         {
-                            canPlay = true;
-                            break;
+                            if (((ColorCard)cardInHand).Color == ((ColorCard)card).Color)
+                            {
+                                canPlay = true;
+                                break;
+                            }
+                            else if (((ActionCard)cardInHand).Action == ((ActionCard)card).Action)
+                            {
+                                canPlay = true;
+                                break;
+                            }
                         }
-                        else if (((ActionCard)cardInHand).Action == ((ActionCard)card).Action)
-                        {
-                            canPlay = true;
-                            break;
-                        }
-
                     }
                 }
             }
-            
-            return canPlay;
+
+            return canPlay; //TODO Needs extensive testing
         }
 
         private void PlayCardButton_Click(object sender, RoutedEventArgs e)
         {
+            _playersEnumerator = _players.GetEnumerator();
+            _playersEnumerator.MoveNext();
+            var currentPlayer = _playersEnumerator.Current;
+            var cardName = HandComboBox.SelectedItem as string;
+            var hand = currentPlayer.GetHand();
+            var card = hand.Single(x => x.Name == cardName);
+
+            var discard = hand.Remove(card);
+            if (discard)
+            {
+                _discardPile.AddCard(card);
+                DiscardPileLabel.Content = "Discard Pile: " + _discardPile.LastCardPlayed();
+            }
+            else
+            {
+                MessageBox.Show("Something went terribly wrong! Head for the hills!!!");
+            }
+
+
             //TODO somehow need to pop the right card from the hand and push to the discard pile.....
-            //might be better to bind actual cards to the combobox nd display the name somehow
+            //might be better to bind actual cards to the
+            //***combobox and display the name somehow***
             //Note there should probably be a redunacy check to make sure the total is 108 cards
             //_discardPile.AddCard(HandComboBox.SelectedItem
             //Get players enumeration
             //_playersEnumerator = _players.GetEnumerator();
             //_playersEnumerator.MoveNext();
-            var currentPlayer = _playersEnumerator.Current;
+
             //TODO Check if player has a car they can play or draw
             //throw new NotImplementedException("PlayCardButton_Click");
 
