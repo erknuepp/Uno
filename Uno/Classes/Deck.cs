@@ -1,4 +1,4 @@
-﻿namespace Uno.Models
+﻿namespace Uno
 {
     using System;
     using System.Collections.Generic;
@@ -37,9 +37,9 @@
 
                 for (int i = 0; i < 2; i++)
                 {
-                    cards.Push(new ActionCard(Action.Reverse, color, $"{color} Reverse"));
-                    cards.Push(new ActionCard(Action.Skip, color, $"{color} Skip"));
-                    cards.Push(new ActionCard(Action.DrawTwo, color, $"{color} Draw Two"));
+                    cards.Push(new ReverseCard(Action.Reverse, color, $"{color} Reverse"));
+                    cards.Push(new SkipCard(Action.Skip, color, $"{color} Skip"));
+                    cards.Push(new DrawTwoCard(Action.DrawTwo, color, $"{color} Draw Two"));
                 }
             }            
         }

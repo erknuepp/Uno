@@ -1,4 +1,4 @@
-﻿namespace Uno.Contracts
+﻿namespace Uno
 {
 
     internal interface IActionable

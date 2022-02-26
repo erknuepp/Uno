@@ -1,4 +1,4 @@
-﻿namespace Uno.Models
+﻿namespace Uno
 {
     using System;
     using System.Collections.Generic;

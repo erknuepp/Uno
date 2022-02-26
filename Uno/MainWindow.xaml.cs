@@ -15,7 +15,6 @@
     using System.Windows.Navigation;
     using System.Windows.Shapes;
 
-    using Uno.Models;
 
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -62,6 +61,7 @@
             if(firstCard.GetType() == typeof(WildCard))
             {
                 //TODO Player gets to pick any color and has to play a card on that color
+                //or just let them play any card?
             }
 
             //Determine of first card flipped requires an action
@@ -69,19 +69,19 @@
             {
                 //TODO Add logic if first card is action card
                 //((ActionCard)firstCard).TakeAction(); //TODO rethink implementation
-                if(((ActionCard)firstCard).Action  == Models.Action.DrawTwo)
+                if(((ActionCard)firstCard).Action  == Action.DrawTwo)
                 {
                     //Add two cards to players hand, MoveNext
                 }
-                else if (((ActionCard)firstCard).Action == Models.Action.Skip)
+                else if (((ActionCard)firstCard).Action == Action.Skip)
                 {
                     //MoveNext
                 }
-                else if (((ActionCard)firstCard).Action == Models.Action.Reverse)
+                else if (((ActionCard)firstCard).Action == Action.Reverse)
                 {
                     //MoveNext
                 }
-                else if (((ActionCard)firstCard).Action == Models.Action.DrawFour)
+                else if (((ActionCard)firstCard).Action == Action.DrawFour)
                 {
                     //return card to deck, shuffle, flip top card
                 }
@@ -110,22 +110,34 @@
         {
             var canPlay = false;
             var type = firstCard.GetType();
-            if(type == typeof(NumberCard))
+            if(type == typeof(ColorCard))
             {
-                var number = ((NumberCard)firstCard).Number;
-                var color = ((NumberCard)firstCard).Color;
-                
-                if (hand.Any(x => ((NumberCard)x).Number == number) || hand.Any(x => ((NumberCard)x).Color == color))
+                if (type == typeof(NumberCard))
                 {
-                    canPlay = true;
+                    var number = ((NumberCard)firstCard).Number;
+                    var color = ((NumberCard)firstCard).Color;
+
+                    //TODO Modify this because not all cards in hand are number card
+                    if (hand
+                        .Where(x => x.GetType() == typeof(NumberCard))
+                        .Any(x => ((NumberCard)x).Number == number)
+                        || hand
+                        .Where(x => x.GetType() == typeof(NumberCard))
+                        .Any(x => ((NumberCard)x).Color == color))
+                    {
+                        canPlay = true;
+                    }
                 }
-            }
-            else if (type == typeof(ActionCard))
-            {
-                if(hand.Any(x => x.GetType() == typeof(ActionCard)){
-                    canPlay = true;
+                else if (type == typeof(ActionCard))
+                {
+                    if (hand
+                        .Where(x => x.GetType() == typeof(ActionCard))
+                        .Any(x => x.GetType() == typeof(ActionCard)))
+                    {
+                        canPlay = true;
+                    }
                 }
-            }
+            }            
             else if (type == typeof(WildCard))
             {
                 canPlay = true;

@@ -1,4 +1,4 @@
-﻿namespace Uno.Models
+﻿namespace Uno
 {
 
     internal abstract class Card

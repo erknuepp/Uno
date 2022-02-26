@@ -1,10 +1,9 @@
-﻿namespace Uno.Models
+﻿namespace Uno
 {
     using System;
 
-    using Uno.Contracts;
 
-    internal class WildDrawFourCard : WildCard, IActionable
+    internal class WildDrawFourCard : WildCard, IDrawable
     {
         const int value = 50;
 
@@ -12,7 +11,7 @@
         {
         }
 
-        public void TakeAction()
+        public void TakeDraw()
         {
             throw new NotImplementedException();
         }

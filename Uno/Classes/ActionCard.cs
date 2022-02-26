@@ -1,8 +1,6 @@
-﻿namespace Uno.Models
+﻿namespace Uno
 {
     using System;
-
-    using Uno.Contracts;
 
     internal class ActionCard : ColorCard, IActionable
     {
