@@ -3,7 +3,7 @@
 
     internal class ColorCard : Card
     {
-        Color Color { get; init; }
+        internal Color Color { get; init; }
 
         public ColorCard(Color color, string name, int value) : base(name, value)
         {

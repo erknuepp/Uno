@@ -26,9 +26,9 @@
             _cards.Add(card);
         }
 
-        internal IList<String> GetHand()
+        internal IList<Card> GetHand()
         {
-            return _cards.Select(x => x.Name).ToList();
+            return _cards;
         }
     }
 }

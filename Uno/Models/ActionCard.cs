@@ -7,7 +7,7 @@
     internal class ActionCard : ColorCard, IActionable
     {
         const int value = 20;
-        Action Action { get; init; }
+        internal Action Action { get; init; }
 
         public ActionCard(Action action , Color color, string name) : base(color, name, value)
         {

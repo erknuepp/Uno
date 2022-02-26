@@ -4,11 +4,11 @@
 
     using Uno.Contracts;
 
-    internal class WildDrawFourCard : Card, IActionable
+    internal class WildDrawFourCard : WildCard, IActionable
     {
         const int value = 50;
 
-        public WildDrawFourCard(string name = "Wild Draw Four") : base(name, value)
+        public WildDrawFourCard(string name = "Wild Draw Four") : base(name)
         {
         }
 

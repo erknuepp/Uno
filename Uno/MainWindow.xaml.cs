@@ -41,17 +41,16 @@
 
         private void PlayGameButton_Click(object sender, RoutedEventArgs e)
         {
+            ((Button)sender).IsEnabled = false;
             //Create players 
             //Start with 2 players and see if we have time for more
             //     (involves reversing player list or direction of play)
-            var numberOfPlayers = (int)NumberOfPlayersComboBox.SelectedValue; 
+            var item = NumberOfPlayersComboBox.SelectedValue as ComboBoxItem;
+            int numberOfPlayers = Convert.ToInt32(item.Content);
             for (int i = 0; i < numberOfPlayers; i++)
             {
                 _players.Add(new Player($"Player {i + 1}"));
             }
-
-            //Get players enumeration
-            _playersEnumerator = _players.GetEnumerator();
 
             //Deal cards
             _deck.Deal(_players);
@@ -60,26 +59,43 @@
             var firstCard = _deck.Draw();
             _discardPile.AddCard(firstCard);
 
+            if(firstCard.GetType() == typeof(WildCard))
+            {
+                //TODO Player gets to pick any color and has to play a card on that color
+            }
+
             //Determine of first card flipped requires an action
             if(firstCard.GetType() == typeof(ActionCard))
             {
                 //TODO Add logic if first card is action card
                 //((ActionCard)firstCard).TakeAction(); //TODO rethink implementation
-                
+                if(((ActionCard)firstCard).Action  == Models.Action.DrawTwo)
+                {
+                    //Add two cards to players hand, MoveNext
+                }
+                else if (((ActionCard)firstCard).Action == Models.Action.Skip)
+                {
+                    //MoveNext
+                }
+                else if (((ActionCard)firstCard).Action == Models.Action.Reverse)
+                {
+                    //MoveNext
+                }
+                else if (((ActionCard)firstCard).Action == Models.Action.DrawFour)
+                {
+                    //return card to deck, shuffle, flip top card
+                }
             }
 
             //Update UI 
             DiscardPileLabel.Content = "Discard Pile: " + _discardPile.LastCardPlayed();
             PlayerNameLabel.Content = _players.First().Name + " Play A Card: ";            
             HandComboBox.ItemsSource = _players.First().GetHand();
-            ((Button)sender).IsEnabled = false;
+            
 
-            //Determine if play has a card to play
-            bool canPlay = CanPlay(firstCard, _players.First().GetHand);
-
-            while (!canPlay)
+            while (!CanPlay(firstCard, _players.First().GetHand()))
             {
-                //TODO draw more cards until a card can be played
+                _players.First().TakeCard(_deck.Draw());
             }
             
         }
@@ -90,10 +106,31 @@
         /// <param name="firstCard"></param>
         /// <param name="getHand"></param>
         /// <returns>bool</returns>
-        private bool CanPlay(Card firstCard, Func<IList<string>> getHand)
+        private bool CanPlay(Card firstCard, IList<Card> hand)
         {
             var canPlay = false;
             var type = firstCard.GetType();
+            if(type == typeof(NumberCard))
+            {
+                var number = ((NumberCard)firstCard).Number;
+                var color = ((NumberCard)firstCard).Color;
+                
+                if (hand.Any(x => ((NumberCard)x).Number == number) || hand.Any(x => ((NumberCard)x).Color == color))
+                {
+                    canPlay = true;
+                }
+            }
+            else if (type == typeof(ActionCard))
+            {
+                if(hand.Any(x => x.GetType() == typeof(ActionCard)){
+                    canPlay = true;
+                }
+            }
+            else if (type == typeof(WildCard))
+            {
+                canPlay = true;
+            }
+
             return canPlay;
         }
 
@@ -103,9 +140,11 @@
             //might be better to bind actual cards to the combobox nd display the name somehow
             //Note there should probably be a redunacy check to make sure the total is 108 cards
             //_discardPile.AddCard(HandComboBox.SelectedItem
+            //Get players enumeration
+            _playersEnumerator = _players.GetEnumerator();
             _playersEnumerator.MoveNext();
             var currentPlayer = _playersEnumerator.Current;
-
+            //TODO Check if player has a car they can play or draw
             throw new NotImplementedException("PlayCardButton_Click");
 
             //TODO if a play plays their last card tally up the score:

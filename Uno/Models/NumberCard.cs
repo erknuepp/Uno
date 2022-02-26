@@ -3,10 +3,10 @@
 
     internal class NumberCard : ColorCard
     {
-        private readonly int number;
+        internal int Number { get; init; }
         public NumberCard(int number, Color color, string name) : base(color, name, number)
         {
-            this.number = number;
+            Number = number;
         }
     }
 }
