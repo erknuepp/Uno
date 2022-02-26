@@ -103,46 +103,60 @@
         /// <summary>
         /// Check that the player has a playable card in their hand
         /// </summary>
-        /// <param name="firstCard"></param>
+        /// <param name="card"></param>
         /// <param name="getHand"></param>
         /// <returns>bool</returns>
-        private bool CanPlay(Card firstCard, IList<Card> hand)
+        private bool CanPlay(Card card, IList<Card> hand)
         {
             var canPlay = false;
-            var type = firstCard.GetType();
-            if(type == typeof(ColorCard))
-            {
-                if (type == typeof(NumberCard))
-                {
-                    var number = ((NumberCard)firstCard).Number;
-                    var color = ((NumberCard)firstCard).Color;
 
-                    //TODO Modify this because not all cards in hand are number card
-                    if (hand
-                        .Where(x => x.GetType() == typeof(NumberCard))
-                        .Any(x => ((NumberCard)x).Number == number)
-                        || hand
-                        .Where(x => x.GetType() == typeof(NumberCard))
-                        .Any(x => ((NumberCard)x).Color == color))
-                    {
-                        canPlay = true;
-                    }
-                }
-                else if (type == typeof(ActionCard))
-                {
-                    if (hand
-                        .Where(x => x.GetType() == typeof(ActionCard))
-                        .Any(x => x.GetType() == typeof(ActionCard)))
-                    {
-                        canPlay = true;
-                    }
-                }
-            }            
-            else if (type == typeof(WildCard))
+            var cardType = card.GetType();
+            var cardBaseType = cardType.BaseType;
+
+            //if card is color card look for those
+            if(cardType != typeof(WildCard) && cardBaseType != typeof(WildCard))
             {
-                canPlay = true;
+                if (cardType == typeof(NumberCard))
+                {
+                    foreach (Card cardInHand in hand)
+                    {
+                        var cardInHandType = cardInHand.GetType();
+                        var cardInHandBaseType = cardInHandType.BaseType;
+
+                        if (((ColorCard)cardInHand).Color == ((ColorCard)card).Color)
+                        {
+                            canPlay = true;
+                            break;
+                        }
+                        else if (((NumberCard)cardInHand).Number == ((NumberCard)card).Number)
+                        {
+                            canPlay = true;
+                            break;
+                        }
+                    }
+                }                
+                else
+                {
+                    foreach (Card cardInHand in hand)
+                    {
+                        var cardInHandType = cardInHand.GetType();
+                        var cardInHandBaseType = cardInHandType.BaseType;
+
+                        if (((ColorCard)cardInHand).Color == ((ColorCard)card).Color)
+                        {
+                            canPlay = true;
+                            break;
+                        }
+                        else if (((ActionCard)cardInHand).Action == ((ActionCard)card).Action)
+                        {
+                            canPlay = true;
+                            break;
+                        }
+
+                    }
+                }
             }
-
+            
             return canPlay;
         }
 
@@ -153,11 +167,11 @@
             //Note there should probably be a redunacy check to make sure the total is 108 cards
             //_discardPile.AddCard(HandComboBox.SelectedItem
             //Get players enumeration
-            _playersEnumerator = _players.GetEnumerator();
-            _playersEnumerator.MoveNext();
+            //_playersEnumerator = _players.GetEnumerator();
+            //_playersEnumerator.MoveNext();
             var currentPlayer = _playersEnumerator.Current;
             //TODO Check if player has a car they can play or draw
-            throw new NotImplementedException("PlayCardButton_Click");
+            //throw new NotImplementedException("PlayCardButton_Click");
 
             //TODO if a play plays their last card tally up the score:
             //Number cards count their face value, all action cards count 20,
