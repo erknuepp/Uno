@@ -18,7 +18,7 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Label Content="Enter the number of Players" Grid.Column="0" HorizontalAlignment="Right"/>
-            <ComboBox Name="NumberOfPlayersComboBox" Grid.Column="1">
+            <ComboBox Name="NumberOfPlayersComboBox" Grid.Column="1" SelectedIndex="0" IsEnabled="False">
                 <ComboBoxItem Content="2"/>
                 <ComboBoxItem Content="3"/>
                 <ComboBoxItem Content="4"/>
@@ -36,13 +36,15 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
+                <ColumnDefinition Width="267*"/>
+                <ColumnDefinition Width="40*"/>
+                <ColumnDefinition Width="166*"/>
+                <ColumnDefinition Width="60*"/>
+                <ColumnDefinition Width="267*"/>
             </Grid.ColumnDefinitions>
-            <Label Name="PlayerNameLabel" Content="Placeholder Player Name" Grid.Column="0" HorizontalAlignment="Right"/>
-            <ComboBox Name="HandComboBox" Grid.Column="1" />
-            <Button Grid.Column="2" Click="PlayCardButton_Click" Content="Play Card"/>
+            <Label Name="PlayerNameLabel" Content="Placeholder Player Name" Grid.Column="0" HorizontalAlignment="Left" Margin="125,0,0,0"/>
+            <ComboBox Name="HandComboBox" Grid.Column="1" SnapsToDevicePixels="True" Grid.ColumnSpan="3" />
+            <Button Grid.Column="4" Click="PlayCardButton_Click" Content="Play Card"/>
         </Grid>
         <Label Content="Discard Pile" Name="DiscardPileLabel"></Label>
         <Label Name="OutputLabel"></Label>

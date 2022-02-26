@@ -41,8 +41,10 @@
 
         private void PlayGameButton_Click(object sender, RoutedEventArgs e)
         {
-            //Create players
-            var numberOfPlayers = (int)NumberOfPlayersComboBox.SelectedValue;
+            //Create players 
+            //Start with 2 players and see if we have time for more
+            //     (involves reversing player list or direction of play)
+            var numberOfPlayers = (int)NumberOfPlayersComboBox.SelectedValue; 
             for (int i = 0; i < numberOfPlayers; i++)
             {
                 _players.Add(new Player($"Player {i + 1}"));
@@ -62,7 +64,8 @@
             if(firstCard.GetType() == typeof(ActionCard))
             {
                 //TODO Add logic if first card is action card
-                ((ActionCard)firstCard).TakeAction();
+                //((ActionCard)firstCard).TakeAction(); //TODO rethink implementation
+                
             }
 
             //Update UI 
