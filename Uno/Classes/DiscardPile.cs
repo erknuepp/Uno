@@ -16,9 +16,9 @@
             cards.Push(card);
         }
         
-        public string LastCardPlayed()
+        public Card LastCardPlayed()
         {
-            return cards.Peek().Name;
+            return cards.Peek();
         }
     }
 }

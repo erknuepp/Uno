@@ -25,7 +25,6 @@
             _deck.Shuffle();
             _discardPile = new DiscardPile();
             _players = new LinkedList<Player>();
-            _playersEnumerator = _players.GetEnumerator();
         }
 
         private void PlayGameButton_Click(object sender, RoutedEventArgs e)
@@ -78,16 +77,14 @@
             }
 
             //Update UI 
+            _playersEnumerator = _players.GetEnumerator();
+            _playersEnumerator.MoveNext();
+            var currentPlayer = _playersEnumerator.Current;
+
             RoundLabel.Content = "Round " + _round;
-            DiscardPileLabel.Content = "Discard Pile: " + _discardPile.LastCardPlayed();
-            PlayerNameLabel.Content = _players.First().Name + " Play A Card: ";
-            HandComboBox.ItemsSource = _players.First().GetHand().Select(x => x.Name);
-
-
-            while (!CanPlay(firstCard, _players.First().GetHand()))
-            {
-                _players.First().TakeCard(_deck.Draw());
-            }
+            DiscardPileLabel.Content = "Discard Pile: " + _discardPile.LastCardPlayed().Name;
+            PlayerNameLabel.Content = currentPlayer.Name + " Play A Card: ";
+            HandComboBox.ItemsSource = currentPlayer.GetHand().Select(x => x.Name);
 
         }
 
@@ -152,24 +149,84 @@
                     }
                 }
             }
+            else if (cardType == typeof(WildCard) || cardBaseType == typeof(WildCard))
+            {
+                canPlay = true;
+            }
 
             return canPlay; //TODO Needs extensive testing
         }
 
+        private bool ValidPlay(Card card, Card lastCardPlayed)
+        {
+            var cardType = card.GetType();
+            var lastCardPlayedType = lastCardPlayed.GetType();
+
+            if (cardType == typeof(WildCard) || cardType.BaseType == typeof(WildCard))
+            {
+                //TODO check if they have any other valid cards if it is a draw for
+                //      or introduce concept of challenge
+                return true;
+            }
+            if (cardType == typeof(NumberCard))
+            {
+                if (lastCardPlayedType == typeof(NumberCard))
+                {
+                    if (((ColorCard)lastCardPlayed).Color == ((ColorCard)card).Color)
+                    {
+                        return true;
+                    }
+                    else if (((NumberCard)lastCardPlayed).Number == ((NumberCard)card).Number)
+                    {
+                        return true;
+                    }
+                }
+            }
+            else
+            {
+                if (lastCardPlayedType == typeof(ActionCard))
+                {
+                    if (((ColorCard)lastCardPlayed).Color == ((ColorCard)card).Color)
+                    {
+                        return true;
+                    }
+                    else if (((ActionCard)lastCardPlayed).Action == ((ActionCard)card).Action)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
         private void PlayCardButton_Click(object sender, RoutedEventArgs e)
         {
-            _playersEnumerator = _players.GetEnumerator();
-            _playersEnumerator.MoveNext();
             var currentPlayer = _playersEnumerator.Current;
             var cardName = HandComboBox.SelectedItem as string;
             var hand = currentPlayer.GetHand();
             var card = hand.Single(x => x.Name == cardName);
-
-            var discard = hand.Remove(card);
-            if (discard)
+            bool discardIsValid = false;
+            if (ValidPlay(card, _discardPile.LastCardPlayed()))
+            {
+                discardIsValid = hand.Remove(card);
+            }
+            else
+            {
+                return;
+            }
+            if (discardIsValid)
             {
                 _discardPile.AddCard(card);
-                DiscardPileLabel.Content = "Discard Pile: " + _discardPile.LastCardPlayed();
+                _playersEnumerator.MoveNext();
+                currentPlayer = _playersEnumerator.Current;
+                var lastCardPlayed = _discardPile.LastCardPlayed();
+                DiscardPileLabel.Content = "Discard Pile: " + lastCardPlayed.Name;
+                PlayerNameLabel.Content = currentPlayer.Name + " Play A Card: ";
+                HandComboBox.ItemsSource = currentPlayer.GetHand().Select(x => x.Name);
+                while (!CanPlay(lastCardPlayed, currentPlayer.GetHand()))
+                {
+                    currentPlayer.TakeCard(_deck.Draw());
+                }
             }
             else
             {
