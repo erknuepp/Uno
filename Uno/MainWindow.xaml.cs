@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Linq;
     using System.Windows;
     using System.Windows.Controls;
@@ -151,7 +152,12 @@
                         var cardInHandType = cardInHand.GetType();
                         var cardInHandBaseType = cardInHandType.BaseType;
 
-                        if (cardInHandType == typeof(NumberCard))
+                        if(cardInHandBaseType == typeof(WildCard) || cardInHandType == typeof(WildCard))
+                        {
+                            canPlay = true;
+                            break;
+                        }
+                        else if (cardInHandType == typeof(NumberCard))
                         {
                             if (((ColorCard)cardInHand).Color == ((ColorCard)card).Color)
                             {
@@ -159,6 +165,14 @@
                                 break;
                             }
                             else if (((NumberCard)cardInHand).Number == ((NumberCard)card).Number)
+                            {
+                                canPlay = true;
+                                break;
+                            }
+                        }
+                        else if(cardInHandBaseType == typeof(ActionCard))
+                        {
+                            if (((ColorCard)cardInHand).Color == ((ColorCard)card).Color)
                             {
                                 canPlay = true;
                                 break;
@@ -173,7 +187,12 @@
                         var cardInHandType = cardInHand.GetType();
                         var cardInHandBaseType = cardInHandType.BaseType;
 
-                        if (cardInHandType == typeof(ActionCard))
+                        if (cardInHandBaseType == typeof(WildCard) || cardInHandType == typeof(WildCard))
+                        {
+                            canPlay = true;
+                            break;
+                        }
+                        else if (cardInHandBaseType == typeof(ActionCard))
                         {
                             if (((ColorCard)cardInHand).Color == ((ColorCard)card).Color)
                             {
@@ -181,6 +200,13 @@
                                 break;
                             }
                             else if (((ActionCard)cardInHand).Action == ((ActionCard)card).Action)
+                            {
+                                canPlay = true;
+                                break;
+                            }
+                        }else if(cardInHandType == typeof(NumberCard))
+                        {
+                            if (((ColorCard)cardInHand).Color == ((ColorCard)card).Color)
                             {
                                 canPlay = true;
                                 break;
@@ -207,8 +233,15 @@
         {
             var cardType = card.GetType();
             var lastCardPlayedType = lastCardPlayed.GetType();
-
-            if (cardType == typeof(WildCard) || cardType.BaseType == typeof(WildCard))
+            Debug.WriteLine($"\nValidPlay()");
+            Debug.WriteLine($"Card Type {cardType}");
+            Debug.WriteLine($"Card Base Type {cardType.BaseType}");
+            Debug.WriteLine($"LastCardPlayed Type {lastCardPlayedType}");
+            Debug.WriteLine($"LastCardPlayed Base Type {lastCardPlayedType.BaseType}");
+            if (cardType == typeof(WildCard) 
+                || cardType.BaseType == typeof(WildCard)
+                || lastCardPlayedType == typeof(WildCard)
+                || lastCardPlayedType.BaseType == typeof(WildCard))
             {
                 //TODO check if they have any other valid cards if it is a draw for
                 //      or introduce concept of challenge
@@ -226,10 +259,17 @@
                     {
                         return true;
                     }
+                }else if(lastCardPlayedType.BaseType == typeof(ActionCard))
+                {
+                    if (((ColorCard)lastCardPlayed).Color == ((ColorCard)card).Color)
+                    {
+                        return true;
+                    }
                 }
             }
             else if (cardType.BaseType == typeof(ActionCard))
             {
+
                 if (lastCardPlayedType.BaseType == typeof(ActionCard))
                 {
                     if (((ColorCard)lastCardPlayed).Color == ((ColorCard)card).Color)
@@ -237,6 +277,13 @@
                         return true;
                     }
                     else if (((ActionCard)lastCardPlayed).Action == ((ActionCard)card).Action)
+                    {
+                        return true;
+                    }
+                }
+                else if(lastCardPlayedType == typeof(NumberCard))
+                {
+                    if (((ColorCard)lastCardPlayed).Color == ((ColorCard)card).Color)
                     {
                         return true;
                     }
