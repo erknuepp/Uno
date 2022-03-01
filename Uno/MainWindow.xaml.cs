@@ -13,18 +13,17 @@
     {
         private Deck _deck;
         private DiscardPile _discardPile;
-        ICollection<Player> _players;
-        IEnumerator<Player> _playersEnumerator;
+        Player[]? _players;
         private int _round = 1; //TODO See how to bind this to a label so it auto updates
+        private int turn = 0;
+        private Player? _currentPlayer;
 
         public MainWindow()
         {
             InitializeComponent();
-
             _deck = new Deck();
             _deck.Shuffle();
             _discardPile = new DiscardPile();
-            _players = new LinkedList<Player>();
         }
 
         private void PlayGameButton_Click(object sender, RoutedEventArgs e)
@@ -35,9 +34,10 @@
             //     (involves reversing player list or direction of play)
             var item = NumberOfPlayersComboBox.SelectedValue as ComboBoxItem;
             int numberOfPlayers = Convert.ToInt32(item.Content);
+            _players = new Player[numberOfPlayers];
             for (int i = 0; i < numberOfPlayers; i++)
             {
-                _players.Add(new Player($"Player {i + 1}"));
+                _players[i] = new Player($"Player {i + 1}");
             }
 
             //Deal cards
@@ -77,15 +77,55 @@
             }
 
             //Update UI 
-            _playersEnumerator = _players.GetEnumerator();
-            _playersEnumerator.MoveNext();
-            var currentPlayer = _playersEnumerator.Current;
+            
+            _currentPlayer = _players[turn % _players.Length];
 
             RoundLabel.Content = "Round " + _round;
             DiscardPileLabel.Content = "Discard Pile: " + _discardPile.LastCardPlayed().Name;
-            PlayerNameLabel.Content = currentPlayer.Name + " Play A Card: ";
-            HandComboBox.ItemsSource = currentPlayer.GetHand().Select(x => x.Name);
+            PlayerNameLabel.Content = _currentPlayer.Name + " Play A Card: ";
+            HandComboBox.ItemsSource = _currentPlayer.GetHand().Select(x => x.Name);
+        }
 
+        private void PlayCardButton_Click(object sender, RoutedEventArgs e)
+        {
+            var cardName = HandComboBox.SelectedItem as string;
+            var hand = _currentPlayer.GetHand();
+            var card = hand.First(x => x.Name == cardName);
+            bool discardIsValid = false;
+            if (ValidPlay(card, _discardPile.LastCardPlayed()))
+            {
+                discardIsValid = hand.Remove(card);
+            }
+            else
+            {
+                return;
+            }
+            if (discardIsValid)
+            {
+                _discardPile.AddCard(card);
+                turn++;
+                _currentPlayer = _players[turn % _players.Length];
+                var lastCardPlayed = _discardPile.LastCardPlayed();
+                DiscardPileLabel.Content = "Discard Pile: " + lastCardPlayed.Name;
+                PlayerNameLabel.Content = _currentPlayer.Name + " Play A Card: ";
+                HandComboBox.ItemsSource = _currentPlayer.GetHand().Select(x => x.Name);
+                while (!CanPlay(lastCardPlayed, _currentPlayer.GetHand()))
+                {
+                    _currentPlayer.TakeCard(_deck.Draw());
+                }
+            }
+            else
+            {
+                MessageBox.Show("Something went terribly wrong! Head for the hills!!!");
+            }
+            
+            //Note there should probably be a redunacy check to make sure the total is 108 cards
+            
+            //TODO if a player plays their last card tally up the score:
+            //Number cards count their face value, all action cards count 20,
+            //and Wild and Wild Draw Four cards count 50.
+            //If a Draw Two or Wild Draw Four card is played to go out,
+            //the next player in the sequence must draw the appropriate number of cards before the score is tallied.
         }
 
         /// <summary>
@@ -94,7 +134,7 @@
         /// <param name="card"></param>
         /// <param name="getHand"></param>
         /// <returns>bool</returns>
-        private bool CanPlay(Card card, IList<Card> hand)
+        private static bool CanPlay(Card card, IList<Card> hand)
         {
             var canPlay = false;
 
@@ -157,7 +197,13 @@
             return canPlay; //TODO Needs extensive testing
         }
 
-        private bool ValidPlay(Card card, Card lastCardPlayed)
+        /// <summary>
+        /// Check that the card being played is valid
+        /// </summary>
+        /// <param name="card"></param>
+        /// <param name="lastCardPlayed"></param>
+        /// <returns>bool</returns>
+        private static bool ValidPlay(Card card, Card lastCardPlayed)
         {
             var cardType = card.GetType();
             var lastCardPlayedType = lastCardPlayed.GetType();
@@ -168,7 +214,7 @@
                 //      or introduce concept of challenge
                 return true;
             }
-            if (cardType == typeof(NumberCard))
+            else if (cardType == typeof(NumberCard))
             {
                 if (lastCardPlayedType == typeof(NumberCard))
                 {
@@ -182,9 +228,9 @@
                     }
                 }
             }
-            else
+            else if (cardType.BaseType == typeof(ActionCard))
             {
-                if (lastCardPlayedType == typeof(ActionCard))
+                if (lastCardPlayedType.BaseType == typeof(ActionCard))
                 {
                     if (((ColorCard)lastCardPlayed).Color == ((ColorCard)card).Color)
                     {
@@ -196,61 +242,8 @@
                     }
                 }
             }
+            MessageBox.Show("Invalid card. Please try again.");
             return false;
-        }
-
-        private void PlayCardButton_Click(object sender, RoutedEventArgs e)
-        {
-            var currentPlayer = _playersEnumerator.Current;
-            var cardName = HandComboBox.SelectedItem as string;
-            var hand = currentPlayer.GetHand();
-            var card = hand.Single(x => x.Name == cardName);
-            bool discardIsValid = false;
-            if (ValidPlay(card, _discardPile.LastCardPlayed()))
-            {
-                discardIsValid = hand.Remove(card);
-            }
-            else
-            {
-                return;
-            }
-            if (discardIsValid)
-            {
-                _discardPile.AddCard(card);
-                _playersEnumerator.MoveNext();
-                currentPlayer = _playersEnumerator.Current;
-                var lastCardPlayed = _discardPile.LastCardPlayed();
-                DiscardPileLabel.Content = "Discard Pile: " + lastCardPlayed.Name;
-                PlayerNameLabel.Content = currentPlayer.Name + " Play A Card: ";
-                HandComboBox.ItemsSource = currentPlayer.GetHand().Select(x => x.Name);
-                while (!CanPlay(lastCardPlayed, currentPlayer.GetHand()))
-                {
-                    currentPlayer.TakeCard(_deck.Draw());
-                }
-            }
-            else
-            {
-                MessageBox.Show("Something went terribly wrong! Head for the hills!!!");
-            }
-
-
-            //TODO somehow need to pop the right card from the hand and push to the discard pile.....
-            //might be better to bind actual cards to the
-            //***combobox and display the name somehow***
-            //Note there should probably be a redunacy check to make sure the total is 108 cards
-            //_discardPile.AddCard(HandComboBox.SelectedItem
-            //Get players enumeration
-            //_playersEnumerator = _players.GetEnumerator();
-            //_playersEnumerator.MoveNext();
-
-            //TODO Check if player has a car they can play or draw
-            //throw new NotImplementedException("PlayCardButton_Click");
-
-            //TODO if a play plays their last card tally up the score:
-            //Number cards count their face value, all action cards count 20,
-            //and Wild and Wild Draw Four cards count 50.
-            //If a Draw Two or Wild Draw Four card is played to go out,
-            //the next player in the sequence must draw the appropriate number of cards before the score is tallied.
         }
     }
 }
