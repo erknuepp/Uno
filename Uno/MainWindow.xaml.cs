@@ -120,12 +120,13 @@
                 if(previousPlayer.GetHand() == null)
                 {
                     ScoreRound(previousPlayer, _players);
-                    _round++;
-                    //reset everything
+                    RoundLabel.Content = "Round " + ++_round;
+                    //TODO reset everything
                 }
                 while (!CanPlay(lastCardPlayed, _currentPlayer.GetHand()))
                 {
                     _currentPlayer.TakeCard(_deck.Draw());
+                    HandComboBox.ItemsSource = _currentPlayer.GetHand().Select(x => x.Name);
                 }
             }
             else
