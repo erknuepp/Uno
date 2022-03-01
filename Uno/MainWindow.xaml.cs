@@ -292,5 +292,22 @@
             MessageBox.Show("Invalid card. Please try again.");
             return false;
         }
+
+        /// <summary>
+        /// Sets the score for the round after a player goes out.
+        /// </summary>
+        /// <param name="winner">Player to recieve points.</param>
+        /// <param name="players">Players that contribute to score. Winner does not contribute, 
+        /// since their hand is empty</param>
+        private void ScoreRound(Player winner, ICollection<Player> players)
+        {
+            var points = 0;
+            foreach (var player in players)
+            {
+                points += player.GetHand().Sum(x => x.Value);
+            }
+            winner.Score = points;
+            _round++;
+        }
     }
 }
