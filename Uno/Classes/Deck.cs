@@ -41,15 +41,15 @@
                     cards.Push(new SkipCard(Action.Skip, color, $"{color} Skip"));
                     cards.Push(new DrawTwoCard(Action.DrawTwo, color, $"{color} Draw Two"));
                 }
-            }            
+            }
         }
 
         internal void Shuffle()
         {
             IList<Card> list = cards.ToList();
-            list=list.OrderBy(a => Guid.NewGuid()).ToList();
+            list = list.OrderBy(a => Guid.NewGuid()).ToList();
             cards = new Stack<Card>();
-            foreach(var card in list)
+            foreach (var card in list)
             {
                 cards.Push(card);
             }
@@ -76,6 +76,10 @@
 
         internal Card Draw()
         {
+            if (cards.Count == 0)
+            {
+                throw new NotImplementedException("Deck.Draw() Implement Reshuffle, see Wiki");
+            }
             return cards.Pop();
         }
     }
