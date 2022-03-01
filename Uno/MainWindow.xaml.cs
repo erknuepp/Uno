@@ -29,7 +29,7 @@
 
         private void PlayGameButton_Click(object sender, RoutedEventArgs e)
         {
-            ((Button)sender).IsEnabled = false;
+            ((Button)sender).Visibility = Visibility.Collapsed;
             //Create players 
             //Start with 2 players and see if we have time for more
             //     (involves reversing player list or direction of play)
@@ -54,7 +54,7 @@
                 //or just let them play any card?
             }
 
-            //Determine of first card flipped requires an action
+            //Determine if first card flipped requires an action
             if (firstCard.GetType() == typeof(ActionCard))
             {
                 //TODO Add logic if first card is action card
@@ -121,7 +121,17 @@
                 {
                     ScoreRound(previousPlayer, _players);
                     RoundLabel.Content = "Round " + ++_round;
-                    //TODO reset everything
+                    //Reset everything
+
+                    //new deck
+                    _deck = new Deck();
+
+                    //shuffle deck
+                    _deck.Shuffle();
+
+                    //deal
+                    _deck.Deal(_players);
+                    //flip first card
                 }
                 while (!CanPlay(lastCardPlayed, _currentPlayer.GetHand()))
                 {
@@ -136,11 +146,6 @@
             
             //Note there should probably be a redunacy check to make sure the total is 108 cards
             
-            //TODO if a player plays their last card tally up the score:
-            //Number cards count their face value, all action cards count 20,
-            //and Wild and Wild Draw Four cards count 50.
-            //If a Draw Two or Wild Draw Four card is played to go out,
-            //the next player in the sequence must draw the appropriate number of cards before the score is tallied.
         }
 
         /// <summary>
@@ -234,7 +239,7 @@
                 canPlay = true;
             }
 
-            return canPlay; //TODO Needs extensive testing
+            return canPlay;
         }
 
         /// <summary>
@@ -257,8 +262,8 @@
                 || lastCardPlayedType == typeof(WildCard)
                 || lastCardPlayedType.BaseType == typeof(WildCard))
             {
-                //TODO check if they have any other valid cards if it is a draw for
-                //      or introduce concept of challenge
+                //TODO Check if they have any other valid cards if it is a draw four
+                //Stretch Goal: Introduce concept of challenge
                 return true;
             }
             else if (cardType == typeof(NumberCard))

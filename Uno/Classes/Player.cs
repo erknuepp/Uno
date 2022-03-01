@@ -30,5 +30,10 @@
         {
             return _cards;
         }
+
+        internal void ThrowHand()
+        {
+            _cards.Clear();
+        }
     }
 }

@@ -5,10 +5,23 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Uno"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" FontSize="24">
+        Title="MainWindow" Height="600" Width="800" FontSize="24" Background="Black" BorderThickness="10,10,10,10" Foreground="#FFFBF3F3" IsManipulationEnabled="True">
+    <Window.BorderBrush>
+        <LinearGradientBrush EndPoint="0.25,1" StartPoint="0.25,0">
+            <GradientStop Color="#D72600" Offset=".25"/>
+            <GradientStop Color="#0956BF" Offset=".5"/>
+            <GradientStop Color="#379711" Offset=".75"/>
+            <GradientStop Color="#ECD407" Offset="1"/>
+        </LinearGradientBrush>
+    </Window.BorderBrush>
+
     <StackPanel>
-        <Label Name="RoundLabel" />
-        <Grid>
+        <Image Source="/logo.svg" Height="100" Margin="0 10 0 0"/>
+        <Label 
+            Content="Round"
+                Foreground="White"
+            x:Name="RoundLabel" />
+        <Grid Visibility="Hidden" Height="0">
             <Grid.RowDefinitions>
                 <RowDefinition/>
             </Grid.RowDefinitions>
@@ -17,8 +30,16 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Label Content="Enter the number of Players" Grid.Column="0" HorizontalAlignment="Right" Visibility="Hidden"/>
-            <ComboBox Name="NumberOfPlayersComboBox" Grid.Column="1" SelectedIndex="0" IsEnabled="False" Visibility="Hidden">
+            <Label 
+                Content="Enter the number of Players" 
+                Foreground="White"
+                Grid.Column="0" 
+                HorizontalAlignment="Right" 
+                Visibility="Hidden"/>
+            <ComboBox x:Name="NumberOfPlayersComboBox" 
+                      Grid.Column="1" SelectedIndex="0" 
+                      IsEnabled="False" 
+                      Visibility="Hidden">
                 <ComboBoxItem Content="2"/>
                 <ComboBoxItem Content="3"/>
                 <ComboBoxItem Content="4"/>
@@ -29,9 +50,9 @@
                 <ComboBoxItem Content="9"/>
                 <ComboBoxItem Content="10"/>
             </ComboBox>
-            
+
         </Grid>
-        <Label Content="Discard Pile" Name="DiscardPileLabel" Margin="0 20 0 20 "></Label>
+        <Label Content="Discard Pile" x:Name="DiscardPileLabel" Margin="0 20 0 20 " Foreground="White"/>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition/>
@@ -42,21 +63,37 @@
                 <ColumnDefinition Width="33*"/>
             </Grid.ColumnDefinitions>
             <Label 
-                Name="PlayerNameLabel" 
+                x:Name="PlayerNameLabel" 
                 Content="Click Play Game!" 
+                Foreground="White"
                 Grid.Column="0" 
                 HorizontalAlignment="Right" 
                 Margin="0,0,10,0"/>
             <ComboBox 
-                Name="HandComboBox" 
+                x:Name="HandComboBox" 
                 Grid.Column="1" />
             <Button 
                 Grid.Column="2" 
                 Click="PlayCardButton_Click" 
                 Content="Play Card"/>
         </Grid>
-        
-        <Label Name="OutputLabel"></Label>
-        <Button Grid.Column="2" Click="PlayGameButton_Click" Content="Play Game" Margin="0 50"/>
+
+        <Label x:Name="OutputLabel"/>
+        <Button 
+            Background="#379711"
+            Foreground="White"
+            Grid.Column="2" 
+            Click="PlayGameButton_Click" 
+            Content="Play Game" 
+            Margin="0 50"/>
+        <StackPanel>
+            <Label 
+                x:Name="InstructionsLabel"
+                Content="Play the same Color, Number, Action OR play a Wild" 
+                Foreground="White"
+                Margin="20" 
+                HorizontalAlignment="Center"/>
+        </StackPanel>
     </StackPanel>
+
 </Window>

@@ -65,6 +65,10 @@
         /// </summary>
         internal void Deal(ICollection<Player> players)
         {
+            foreach (var player in players)
+            {
+                player.ThrowHand();
+            }
             for (int i = 0; i < 7; i++)
             {
                 foreach (var player in players)
