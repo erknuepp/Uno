@@ -83,13 +83,18 @@
 
             RoundLabel.Content = "Round " + _round;
             DiscardPileLabel.Content = "Discard Pile: " + _discardPile.LastCardPlayed().Name;
-            PlayerNameLabel.Content = _currentPlayer.Name + " Play A Card: ";
+            PlayerNameLabel.Content = _currentPlayer.Name + " Hand";
             HandComboBox.ItemsSource = _currentPlayer.GetHand().Select(x => x.Name);
         }
 
         private void PlayCardButton_Click(object sender, RoutedEventArgs e)
         {
             var cardName = HandComboBox.SelectedItem as string;
+            if (cardName == null)
+            {
+                MessageBox.Show("Please select a card from the dropdown.");
+                return;
+            }
             var hand = _currentPlayer.GetHand();
             var card = hand.First(x => x.Name == cardName);
             bool discardIsValid = false;
@@ -110,7 +115,7 @@
                 _currentPlayer = _players[turn % _players.Length];
                 var lastCardPlayed = _discardPile.LastCardPlayed();
                 DiscardPileLabel.Content = "Discard Pile: " + lastCardPlayed.Name;
-                PlayerNameLabel.Content = _currentPlayer.Name + " Play A Card: ";
+                PlayerNameLabel.Content = _currentPlayer.Name + " Hand";
                 HandComboBox.ItemsSource = _currentPlayer.GetHand().Select(x => x.Name);
                 if(previousPlayer.GetHand() == null)
                 {
