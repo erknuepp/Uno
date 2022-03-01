@@ -103,13 +103,21 @@
             }
             if (discardIsValid)
             {
+                //TODO Check for and apply actions here???
                 _discardPile.AddCard(card);
+                var previousPlayer = _currentPlayer;
                 turn++;
                 _currentPlayer = _players[turn % _players.Length];
                 var lastCardPlayed = _discardPile.LastCardPlayed();
                 DiscardPileLabel.Content = "Discard Pile: " + lastCardPlayed.Name;
                 PlayerNameLabel.Content = _currentPlayer.Name + " Play A Card: ";
                 HandComboBox.ItemsSource = _currentPlayer.GetHand().Select(x => x.Name);
+                if(previousPlayer.GetHand() == null)
+                {
+                    ScoreRound(previousPlayer, _players);
+                    _round++;
+                    //reset everything
+                }
                 while (!CanPlay(lastCardPlayed, _currentPlayer.GetHand()))
                 {
                     _currentPlayer.TakeCard(_deck.Draw());
