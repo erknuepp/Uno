@@ -30,6 +30,7 @@
         private void PlayGameButton_Click(object sender, RoutedEventArgs e)
         {
             ((Button)sender).Visibility = Visibility.Collapsed;
+            PlayerGrid.Visibility = Visibility.Visible;
             //Create players 
             //Start with 2 players and see if we have time for more
             //     (involves reversing player list or direction of play)
@@ -117,10 +118,10 @@
                 DiscardPileLabel.Content = "Discard Pile: " + lastCardPlayed.Name;
                 PlayerNameLabel.Content = _currentPlayer.Name + " Hand";
                 HandComboBox.ItemsSource = _currentPlayer.GetHand().Select(x => x.Name);
-                if(previousPlayer.GetHand() == null)
+                if(previousPlayer.GetHand().Count() == 0)
                 {
                     ScoreRound(previousPlayer, _players);
-                    RoundLabel.Content = "Round " + ++_round;
+                    RoundLabel.Content = $"Round {++_round}";
                     //Reset everything
 
                     //new deck
@@ -131,7 +132,8 @@
 
                     //deal
                     _deck.Deal(_players);
-                    //flip first card
+                    //TODO flip first card
+                    throw new NotImplementedException("flip first card");
                 }
                 while (!CanPlay(lastCardPlayed, _currentPlayer.GetHand()))
                 {

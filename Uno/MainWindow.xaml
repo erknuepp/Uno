@@ -53,7 +53,7 @@
 
         </Grid>
         <Label Content="Discard Pile" x:Name="DiscardPileLabel" Margin="0 20 0 20 " Foreground="White"/>
-        <Grid>
+        <Grid Name="PlayerGrid" Visibility="Collapsed">
             <Grid.RowDefinitions>
                 <RowDefinition/>
             </Grid.RowDefinitions>
@@ -71,7 +71,9 @@
                 Margin="0,0,10,0"/>
             <ComboBox 
                 x:Name="HandComboBox" 
-                Grid.Column="1" />
+                Grid.Column="1" MaxDropDownHeight="Infinity" 
+                >
+            </ComboBox>
             <Button 
                 Grid.Column="2" 
                 Click="PlayCardButton_Click" 
